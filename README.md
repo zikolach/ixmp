@@ -147,7 +147,7 @@ the ix modeling platform for scientific publications or technical reports:
 3. (Optional) Run tests to check that `ixmp` works on your system:
 
        $ pip install .[tests]
-       $ py.test tests
+       $ py.test -x tests
 
 ### Notes and Warnings
 

@@ -248,6 +248,27 @@ def test_meta(test_mp):
     assert obs == exp
 
 
+def test_docs(test_mp):
+    test_mp.set_doc("model", "Douglas Adams", "test description")
+    obs = test_mp.get_doc("model", "Douglas Adams")
+    assert obs == "test description"
+
+    test_mp.set_doc("scenario", "Hitchhiker", "hitchhiker's guide to the galaxy")
+    test_mp.set_doc("scenario", "standard",
+                    "when learning how to can, you may run into a few of these canning problems")
+    exp = {
+        "standard": "when learning how to can, you may run into a few of these canning problems",
+        "Hitchhiker": "hitchhiker's guide to the galaxy"
+    }
+    obs = test_mp.get_doc("scenario")
+    assert 2 == len(obs)
+    assert exp["standard"] == obs["standard"]
+    assert exp["Hitchhiker"] == obs["Hitchhiker"]
+
+    obs = test_mp.get_doc("metadata")
+    assert 0 == len(obs)
+
+
 def test_load_scenario_data(test_mp):
     scen = ixmp.Scenario(test_mp, *can_args, cache=True)
     scen.load_scenario_data()

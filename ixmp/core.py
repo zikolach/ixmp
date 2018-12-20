@@ -88,8 +88,8 @@ class Platform(object):
             else:
                 raise ValueError('Unknown dbtype: {}'.format(dbtype))
         except TypeError:
-            msg = ("Could not launch the JVM for the ixmp.Platform."
-                   "Make sure that all dependencies of ixmp.jar"
+            msg = ("Could not launch the JVM for the ixmp.Platform. "
+                   "Make sure that all dependencies of ixmp.jar "
                    "are included in the 'ixmp/lib' folder.")
             logger().info(msg)
             raise
@@ -190,6 +190,18 @@ class Platform(object):
             (timestamp and user are added automatically)
         """
         self._jobj.addUnitToDB(unit, comment)
+
+    def set_doc(self, domain, name, text):
+        self._jobj.setDoc(self.get_doc_domain(domain), name, text)
+
+    def get_doc(self, domain, name = None):
+        if name == None:
+            return self._jobj.getDoc(self.get_doc_domain(domain))
+        return self._jobj.getDoc(self.get_doc_domain(domain), name)
+
+    def get_doc_domain(self, domainName):
+        return JClass('at.ac.iiasa.ixmp.dto.DocumentationKey$DocumentationDomain').valueOf(domainName.upper())
+
 
 # %% class TimeSeries
 
